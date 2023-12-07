@@ -300,3 +300,19 @@ class Teams(Base):
             self.add_to_json('exclude_policy_constrained', exclude_policy_constrained)
 
         return self.request(url, request_type='POST', body=True)
+
+    def check_if_team_exists(self, name: str) -> dict:
+        """
+        Check if the team exists based on a team name.
+
+        Must be authenticated.
+
+        :param name: Team Name
+        :return: Team retrieval info
+        """
+
+        url = f"{self.api_url}/name/{name}/exists"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
