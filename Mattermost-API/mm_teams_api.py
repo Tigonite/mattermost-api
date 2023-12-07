@@ -234,3 +234,21 @@ class Teams(Base):
         self.add_application_json_header()
 
         return self.request(url, request_type='POST')
+
+    def get_team_by_name(self, name: str) -> dict:
+        """
+        Get a team based on provided name string
+
+        Must be authenticated, team type is open and have the view_team permission.
+
+        :param name: Team Name
+        :return: Team retrieval info.
+        """
+
+        url = f"{self.api_url}/name/{name}"
+
+        self.reset()
+        self.add_application_json_header()
+
+        return self.request(url, request_type='GET')
+
