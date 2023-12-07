@@ -153,3 +153,41 @@ class Teams(Base):
             self.add_to_json('permanent', permanent)
 
         return self.request(url, request_type='DEL', body=True)
+
+    def patch_team(self,
+                   team_id: str,
+                   display_name: str,
+                   description: str,
+                   company_name: str,
+                   invite_id: str,
+                   allow_open_invite: bool) -> dict:
+        """
+        Partially update a team by providing only the fields you want to update. Omitted fields will not be updated. The fields that can be updated are defined in the request body, all other provided fields will be ignored.
+
+        Must have the manage_team permission.
+
+        :param team_id: Team GUID
+        :param display_name: Team display name that is to be updated.
+        :param description: Team description that is to be updated.
+        :param company_name: Team company_name that is to be updated.
+        :param invite_id: Team invite ID that is to be updated.
+        :param allow_open_invite: Team allow open invite that is to be updated.
+        :return: Team deletion info.
+        """
+
+        url = f"{self.api_url}/{team_id}/patch"
+
+        self.reset()
+        self.add_application_json_header()
+        if display_name is not None:
+            self.add_to_json('display_name', display_name)
+        if description is not None:
+            self.add_to_json('description', description)
+        if display_name is not None:
+            self.add_to_json('company_name', company_name)
+        if display_name is not None:
+            self.add_to_json('invite_id', invite_id)
+        if display_name is not None:
+            self.add_to_json('allow_open_invite', allow_open_invite)
+
+        return self.request(url, request_type='PUT', body=True)
