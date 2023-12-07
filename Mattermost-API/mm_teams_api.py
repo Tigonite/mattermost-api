@@ -64,4 +64,18 @@ class Teams(Base):
 
         return self.request(url, request_type='GET', body=True)
 
+    def get_team(self, team_id: str) -> dict:
+        """
+        Get a team on the system.
 
+        Must be authenticated and have the view_team permission.
+
+        :param team_id: Team GUID.
+        :return: Team retrieval info.
+        """
+
+        url = f"{self.api_url}/{team_id}"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
