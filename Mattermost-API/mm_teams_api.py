@@ -252,3 +252,51 @@ class Teams(Base):
 
         return self.request(url, request_type='GET')
 
+    def search_teams(self,
+                     term: str = None,
+                     page: str = None,
+                     per_page: str = None,
+                     allow_open_invite: bool = None,
+                     group_constrained: bool = None,
+                     exclude_policy_constrained: bool = None) -> dict:
+        """
+        Search teams based on search term and options provided in the request body.
+
+        Logged in user only shows open teams Logged in user with "manage_system" permission shows all teams.
+
+        :param term: The search term to match against the name or display name of teams
+        :param page: The page number to return, if paginated. If this parameter is not present with the
+        per_page parameter then the results will be returned un-paged.
+        :param per_page: The number of entries to return per page, if paginated.
+        If this parameter is not present with the page parameter then the results will be returned un-paged.
+        :param allow_open_invite: Filters results to teams where allow_open_invite is set to true or false,
+        excludes group constrained channels if this filter option is passed. If this filter option is not passed
+        then the query will remain unchanged. Minimum server version: 5.28
+        :param group_constrained: Filters results to teams where group_constrained is set to true or false,
+        returns the union of results when used with allow_open_invite If the filter option is not passed then
+        the query will remain unchanged. Minimum server version: 5.28
+        :param exclude_policy_constrained: Default: false. If set to true, only teams which do not
+        have a granular retention policy assigned to them will be returned.
+        The sysconsole_read_compliance_data_retention permission is required to use this parameter.
+        Minimum server version: 5.35
+        :return: Paginated team info.
+        """
+
+        url = f"{self.api_url}/search"
+
+        self.reset()
+        self.add_application_json_header()
+        if term is not None:
+            self.add_to_json('term', term)
+        if page is not None:
+            self.add_to_json('page', page)
+        if per_page is not None:
+            self.add_to_json('per_page', per_page)
+        if allow_open_invite is not None:
+            self.add_to_json('allow_open_invite', allow_open_invite)
+        if group_constrained is not None:
+            self.add_to_json('group_constrained', group_constrained)
+        if exclude_policy_constrained is not None:
+            self.add_to_json('exclude_policy_constrained', exclude_policy_constrained)
+
+        return self.request(url, request_type='POST', body=True)
