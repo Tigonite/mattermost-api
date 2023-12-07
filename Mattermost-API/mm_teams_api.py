@@ -316,3 +316,19 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def get_user_teams(self, user_id: str) -> dict:
+        """
+        Get a list of teams that a user is on.
+
+        Must be authenticated as the user or have the manage_system permission.
+
+        :param user_id: User GUID
+        :return: Team list retrieval info
+        """
+
+        url = f"{self.api_url}/{user_id}/teams"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
