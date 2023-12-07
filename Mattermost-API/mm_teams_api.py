@@ -332,3 +332,29 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def get_team_members(self,
+                         team_id: str,
+                         page: int = None,
+                         per_page: int = None) -> dict:
+        """
+        Get a page team members list based on query string parameters - team id, page and per page.
+
+        Must be authenticated and have the view_team permission.
+
+        :param team_id: Team GUID
+        :param page: Default: 0. The page to select.
+        :param per_page: Default: 60. The number of users per page.
+        :return: Team members retrieval info
+        """
+
+        url = f"{self.api_url}/{team_id}/members"
+
+        self.reset()
+        self.add_application_json_header()
+        if page is not None:
+            self.add_to_json('page', page)
+        if per_page is not None:
+            self.add_to_json('per_page', per_page)
+
+        return self.request(url, request_type='GET')
