@@ -358,3 +358,29 @@ class Teams(Base):
             self.add_to_json('per_page', per_page)
 
         return self.request(url, request_type='GET')
+
+    def add_user_to_team(self,
+                         team_id: str,
+                         t_id: str = None,
+                         user_id: str = None) -> dict:
+        """
+        Add user to the team by user_id.
+
+        Must be authenticated and team be open to add self. For adding another user, authenticated user must have the add_user_to_team permission.
+
+        :param team_id: Team GUID
+        :param t_id: Team GUID
+        :param user_id: user GUID
+        :return: Team members creation info
+        """
+
+        url = f"{self.api_url}/{team_id}/members"
+
+        self.reset()
+        self.add_application_json_header()
+        if t_id is not None:
+            self.add_to_json('team_id', t_id)
+        if user_id is not None:
+            self.add_to_json('user_id', user_id)
+
+        return self.request(url, request_type='GET', body=True)
