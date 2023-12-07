@@ -215,3 +215,22 @@ class Teams(Base):
         self.add_to_json('privacy', privacy)
 
         return self.request(url, request_type='PUT', body=True)
+
+    def restore_team(self, team_id: str) -> dict:
+        """
+        Restore a team that was previously soft deleted.
+
+        Minimum server version: 5.24
+
+        Must have the manage_team permission.
+
+        :param team_id: Team GUID
+        :return: Team restore info.
+        """
+
+        url = f"{self.api_url}/{team_id}/restore"
+
+        self.reset()
+        self.add_application_json_header()
+
+        return self.request(url, request_type='POST')
