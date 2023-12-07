@@ -162,7 +162,8 @@ class Teams(Base):
                    invite_id: str,
                    allow_open_invite: bool) -> dict:
         """
-        Partially update a team by providing only the fields you want to update. Omitted fields will not be updated. The fields that can be updated are defined in the request body, all other provided fields will be ignored.
+        Partially update a team by providing only the fields you want to update. Omitted fields will not be updated.
+        The fields that can be updated are defined in the request body, all other provided fields will be ignored.
 
         Must have the manage_team permission.
 
@@ -189,5 +190,28 @@ class Teams(Base):
             self.add_to_json('invite_id', invite_id)
         if display_name is not None:
             self.add_to_json('allow_open_invite', allow_open_invite)
+
+        return self.request(url, request_type='PUT', body=True)
+
+    def update_team_privacy(self,
+                            team_id: str,
+                            privacy: str) -> dict:
+        """
+        Updates team's privacy allowing changing a team from Public (open) to Private (invitation only) and back.
+
+        Minimum server version: 5.24
+
+        manage_team permission for the team of the team.
+
+        :param team_id: Team GUID.
+        :param privacy: Team privacy setting: 'O' for a public (open) team, 'I' for a private (invitation only) team.
+        :return: Team conversion info.
+        """
+
+        url = f"{self.api_url}/{team_id}/privacy"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('privacy', privacy)
 
         return self.request(url, request_type='PUT', body=True)
