@@ -384,3 +384,21 @@ class Teams(Base):
             self.add_to_json('user_id', user_id)
 
         return self.request(url, request_type='GET', body=True)
+
+    def add_user_to_team_from_invite(self, token: str) -> dict:
+        """
+        Using either an invite id or hash/data pair from an email invite link, add a user to a team.
+
+        Must be authenticated.
+
+        :param token: Token id from the invitation
+        :return: Team members creation info
+        """
+
+        url = f"{self.api_url}/members/invite"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('token', token)
+
+        return self.request(url, request_type='GET', body=True)
