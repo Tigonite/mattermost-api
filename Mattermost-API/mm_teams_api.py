@@ -402,3 +402,60 @@ class Teams(Base):
         self.add_to_json('token', token)
 
         return self.request(url, request_type='GET', body=True)
+
+    def add_multiple_users_to_team(self,
+                                   team_id: str,
+                                   graceful:bool=None,
+                                   t_id:str=None,
+                                   user_id:str=None,
+                                   roles:str=None,
+                                   delete_at:int=None,
+                                   scheme_user:bool=None,
+                                   scheme_admin:bool=None,
+                                   explicit_roles:str=None
+                                   ) -> dict:
+        """
+        Add a number of users to the team by user_id.
+
+        Must be authenticated. Authenticated user must have the add_user_to_team permission.
+
+        :param team_id: Team GUID.
+        :param graceful: Instead of aborting the operation if a user cannot be added,
+        return an array that will contain both the success and added members and the ones with error,
+        in form of [{"member": {...}, "user_id", "...", "error": {...}}]
+        :param t_id: The ID of the team this member belongs to.
+        :param user_id: The ID of the user this member relates to.
+        :param roles: The complete list of roles assigned to this team member,
+        as a space-separated list of role names, including any roles granted implicitly through permissions schemes.
+        :param delete_at: The time in milliseconds that this team member was deleted.
+        :param scheme_user: Whether this team member
+        holds the default user role defined by the team's permissions scheme.
+        :param scheme_admin: Whether this team member holds the default admin
+        role defined by the team's permissions scheme.
+        :param explicit_roles: The list of roles explicitly assigned to this team member,
+        as a space separated list of role names. This list does not include any roles granted implicitly through permissions schemes.
+        :return: Team members creation info
+        """
+
+        url = f"{self.api_url}/team_id/members/batch"
+
+        self.reset()
+        self.add_application_json_header()
+        if graceful is not None:
+            self.add_to_json('graceful', graceful)
+        if t_id is not None:
+            self.add_to_json('team_id', t_id)
+        if user_id is not None:
+            self.add_to_json('user_id', user_id)
+        if roles is not None:
+            self.add_to_json('roles', roles)
+        if delete_at is not None:
+            self.add_to_json('delete_at', delete_at)
+        if scheme_user is not None:
+            self.add_to_json('scheme_user', scheme_user)
+        if scheme_admin is not None:
+            self.add_to_json('scheme_admin', scheme_admin)
+        if explicit_roles is not None:
+            self.add_to_json('explicit_roles', explicit_roles)
+
+        return self.request(url, request_type='POST', body=True)
