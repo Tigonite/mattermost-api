@@ -552,3 +552,19 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def regenerate_invite_id_from_team(self, team_id) -> dict:
+        """
+        Regenerates the invite ID used in invite links of a team.
+
+        Must be authenticated and have the manage_team permission.
+
+        :param team_id: Team GUID
+        :return: Team invite ID regeneration info.
+        """
+
+        url = f"{self.api_url}/{team_id}/regenerate_invite_id"
+
+        self.reset()
+
+        return self.request(url, request_type='POST')
