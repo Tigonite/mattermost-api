@@ -460,7 +460,7 @@ class Teams(Base):
 
         return self.request(url, request_type='POST', body=True)
 
-    def get_team_members_for_user(self, user_id) -> dict:
+    def get_team_members_for_user(self, user_id:str) -> dict:
         """
         Get a list of team members for a user. Useful for getting the ids of teams the user is
         on and the roles they have in those teams.
@@ -553,7 +553,7 @@ class Teams(Base):
 
         return self.request(url, request_type='GET')
 
-    def regenerate_invite_id_from_team(self, team_id) -> dict:
+    def regenerate_invite_id_from_team(self, team_id:str) -> dict:
         """
         Regenerates the invite ID used in invite links of a team.
 
@@ -576,7 +576,7 @@ class Teams(Base):
         Minimum server version: 4.9.
 
         User must be authenticated. In addition, team must be open or the user must have the view_team permission.
-
+00
         :param team_id: Team GUID
         :return: Team icon retrieval info
         """
@@ -587,4 +587,27 @@ class Teams(Base):
 
         return self.request(url, request_type='GET')
 
+    def sets_team_icon(self,
+                       team_id: str,
+                       image: str = None) -> dict:
+        """
+        Sets the team icon for the team.
 
+        Minimum server version: 4.9
+
+        Must be authenticated and have the manage_team permission.
+
+        :param team_id: Team GUID
+        :param image: The image to be uploaded
+        :return: Team icon info
+        """
+
+        url = f"{self.api_url}/{team_id}/image"
+
+        self.reset()
+        self.add_multipart_form_data()
+
+        if image is not None:
+            self.add_file(file_path=image)
+
+        return self.request(url, request_type='POST', files=True)
