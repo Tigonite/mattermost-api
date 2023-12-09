@@ -568,3 +568,23 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='POST')
+
+    def get_team_icon(self, team_id: str) -> dict:
+        """
+        Get the team icon of the team.
+
+        Minimum server version: 4.9.
+
+        User must be authenticated. In addition, team must be open or the user must have the view_team permission.
+
+        :param team_id: Team GUID
+        :return: Team icon retrieval info
+        """
+
+        url = f"{self.api_url}/{team_id}/image"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
+
+
