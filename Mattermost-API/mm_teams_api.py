@@ -405,14 +405,14 @@ class Teams(Base):
 
     def add_multiple_users_to_team(self,
                                    team_id: str,
-                                   graceful:bool=None,
-                                   t_id:str=None,
-                                   user_id:str=None,
-                                   roles:str=None,
-                                   delete_at:int=None,
-                                   scheme_user:bool=None,
-                                   scheme_admin:bool=None,
-                                   explicit_roles:str=None
+                                   graceful: bool = None,
+                                   t_id: str = None,
+                                   user_id: str = None,
+                                   roles: str = None,
+                                   delete_at: int = None,
+                                   scheme_user: bool = None,
+                                   scheme_admin: bool = None,
+                                   explicit_roles: str = None
                                    ) -> dict:
         """
         Add a number of users to the team by user_id.
@@ -437,7 +437,7 @@ class Teams(Base):
         :return: Team members creation info
         """
 
-        url = f"{self.api_url}/team_id/members/batch"
+        url = f"{self.api_url}/{team_id}/members/batch"
 
         self.reset()
         self.add_application_json_header()
@@ -459,3 +459,20 @@ class Teams(Base):
             self.add_to_json('explicit_roles', explicit_roles)
 
         return self.request(url, request_type='POST', body=True)
+
+    def get_team_members_for_user(self, user_id) -> dict:
+        """
+        Get a list of team members for a user. Useful for getting the ids of teams the user is
+        on and the roles they have in those teams.
+
+        Must be logged in as the user or have the edit_other_users permission.
+
+        :param user_id: User GUID
+        :return: Team members retrieval info
+        """
+
+        url = f"{self.api_url}/{user_id}/teams/members/"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
