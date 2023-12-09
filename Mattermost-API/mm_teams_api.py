@@ -536,3 +536,19 @@ class Teams(Base):
             self.add_to_json('user_ids', user_ids)
 
         return self.request(url, request_type='POST', body=True)
+
+    def get_team_stats(self, team_id: str) -> dict:
+        """
+        Get a team stats on the system.
+
+        Must be authenticated and have the view_team permission.
+
+        :param team_id: Team GUID
+        :return: Team stats retrieval info
+        """
+
+        url = f"{self.api_url}/{team_id}/stats"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
