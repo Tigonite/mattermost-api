@@ -476,3 +476,22 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def get_team_member(self,
+                        team_id: str,
+                        user_id: str) -> dict:
+        """
+        Get a team member on the system.
+
+        Must be authenticated and have the view_team permission.
+
+        :param team_id: Team GUID
+        :param user_id: User GUID
+        :return: Team members retrieval info
+        """
+
+        url = f"{self.api_url}/{team_id}/members/{user_id}"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
