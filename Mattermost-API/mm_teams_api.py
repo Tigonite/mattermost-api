@@ -513,4 +513,26 @@ class Teams(Base):
 
         self.reset()
 
-        return self.request(url, request_type='GET')
+        return self.request(url, request_type='DEL')
+
+    def get_team_members_by_ids(self,
+                                team_id: str,
+                                user_ids: list[str]) -> dict:
+        """
+        Get a list of team members based on a provided array of user ids.
+
+        Must have view_team permission for the team.
+
+        :param team_id: Team GUID
+        :param user_ids: User GUID
+        :return: Team members retrieval info
+        """
+
+        url = f"{self.api_url}/{team_id}/members/ids"
+
+        self.reset()
+        self.add_application_json_header()
+        if user_ids is not None:
+            self.add_to_json('user_ids', user_ids)
+
+        return self.request(url, request_type='POST', body=True)
