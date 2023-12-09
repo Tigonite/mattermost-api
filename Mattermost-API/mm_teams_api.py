@@ -495,3 +495,22 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def remove_user_from_team(self,
+                              team_id: str,
+                              user_id: str) -> dict:
+        """
+        Delete the team member object for a user, effectively removing them from a team.
+
+        Must be logged in as the user or have the remove_user_from_team permission.
+
+        :param team_id: Team GUID
+        :param user_id: User GUID
+        :return: Team members deletion info
+        """
+
+        url = f"{self.api_url}/{team_id}/members/{user_id}"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
