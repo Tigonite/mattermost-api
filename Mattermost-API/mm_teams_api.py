@@ -611,3 +611,21 @@ class Teams(Base):
             self.add_file(file_path=image)
 
         return self.request(url, request_type='POST', files=True)
+
+    def remove_team_icon(self, team_id: str) -> dict:
+        """
+        Remove the team icon for the team.
+
+        Minimum server version: 4.10
+
+        Must be authenticated and have the manage_team permission.
+
+        :param team_id: Team GUID
+        :return: Team icon info
+        """
+
+        url = f"{self.api_url}/{team_id}/image"
+
+        self.reset()
+
+        return self.request(url, request_type='DEL')
