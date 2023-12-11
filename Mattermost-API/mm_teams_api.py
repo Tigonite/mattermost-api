@@ -629,3 +629,28 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='DEL')
+
+    def update_team_member_roles(self,
+                                 team_id: str,
+                                 user_id: str,
+                                 roles: str) -> dict:
+        """
+        Update a team member roles. Valid team roles are "team_user", "team_admin" or both of them.
+        Overwrites any previously assigned team roles.
+
+        Must be authenticated and have the manage_team_roles permission.
+
+        :param team_id: Team GUID
+        :param user_id: User GUID
+        :param roles: Space-delimited team roles to assign to the user
+        :return: Team member roles update info
+        """
+
+        url = f"{self.api_url}/{team_id}/members/{user_id}/roles"
+
+        self.reset()
+        self.add_application_json_header()
+        if roles is not None:
+            self.add_to_json('roles', roles)
+
+        return self.request(url, request_type='PUT', body=True)
