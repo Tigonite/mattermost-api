@@ -654,3 +654,36 @@ class Teams(Base):
             self.add_to_json('roles', roles)
 
         return self.request(url, request_type='PUT', body=True)
+
+    def update_scheme_derived_roles_of_team_member(self,
+                                                   team_id:str,
+                                                   user_id:str,
+                                                   scheme_admin:bool,
+                                                   scheme_user:bool)->dict:
+        """
+        Update a team member's scheme_admin/scheme_user properties.
+        Typically this should either be scheme_admin=false, scheme_user=true for ordinary team member,
+        or scheme_admin=true, scheme_user=true for a team admin.
+
+        Minimum server version: 5.0
+
+        Must be authenticated and have the manage_team_roles permission.
+
+        :param team_id: Team GUID
+        :param user_id: User GUID
+        :param scheme_admin: Scheme admin property
+        :param scheme_user: Scheme user property
+        :return: Team member's scheme-derived roles update info.
+        """
+
+        url = f"{self.api_url}/{team_id}/members/{user_id}/schemeRoles"
+
+        self.reset()
+        self.add_application_json_header()
+
+        if scheme_admin is not None:
+            self.add_to_json('scheme_admin', scheme_admin)
+        if scheme_user is not None:
+            self.add_to_json('scheme_user', scheme_user)
+
+        return self.request(url, request_type='PUT', body=True)
