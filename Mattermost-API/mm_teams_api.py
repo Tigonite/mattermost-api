@@ -732,3 +732,28 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def invite_users_to_team_by_email(self,
+                                      team_id: str,
+                                      user_email: list[str] = None) -> dict:
+        """
+        Invite users to the existing team using the user's email.
+
+        The number of emails that can be sent is rate limited to 20 per hour with a burst of 20 emails.
+        If the rate limit exceeds, the error message contains details on when to retry and when the timer will be reset.
+
+        Must have invite_user and add_user_to_team permissions for the team.
+
+        :param team_id: Team GUID.
+        :param user_email: List of user's email.
+        :return: Users invite info.
+        """
+
+        url = f"{self.api_url}/teams/{team_id}/invite/email"
+
+        self.reset()
+        self.add_application_json_header()
+        if user_email is not None:
+            self.add_to_json('user_email', user_email)
+
+        return self.request(url, request_type='POST', body=True)
