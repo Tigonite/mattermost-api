@@ -460,7 +460,7 @@ class Teams(Base):
 
         return self.request(url, request_type='POST', body=True)
 
-    def get_team_members_for_user(self, user_id:str) -> dict:
+    def get_team_members_for_user(self, user_id: str) -> dict:
         """
         Get a list of team members for a user. Useful for getting the ids of teams the user is
         on and the roles they have in those teams.
@@ -553,7 +553,7 @@ class Teams(Base):
 
         return self.request(url, request_type='GET')
 
-    def regenerate_invite_id_from_team(self, team_id:str) -> dict:
+    def regenerate_invite_id_from_team(self, team_id: str) -> dict:
         """
         Regenerates the invite ID used in invite links of a team.
 
@@ -656,10 +656,10 @@ class Teams(Base):
         return self.request(url, request_type='PUT', body=True)
 
     def update_scheme_derived_roles_of_team_member(self,
-                                                   team_id:str,
-                                                   user_id:str,
-                                                   scheme_admin:bool,
-                                                   scheme_user:bool)->dict:
+                                                   team_id: str,
+                                                   user_id: str,
+                                                   scheme_admin: bool,
+                                                   scheme_user: bool) -> dict:
         """
         Update a team member's scheme_admin/scheme_user properties.
         Typically this should either be scheme_admin=false, scheme_user=true for ordinary team member,
@@ -689,9 +689,9 @@ class Teams(Base):
         return self.request(url, request_type='PUT', body=True)
 
     def get_team_unread_for_user(self,
-                                 user_id:str,
-                                 exclude_team:str,
-                                 include_collapsed_threads:bool)->dict:
+                                 user_id: str,
+                                 exclude_team: str,
+                                 include_collapsed_threads: bool = None) -> dict:
         """
         Get the count for unread messages and mentions in the teams the user is a member of.
 
@@ -714,5 +714,21 @@ class Teams(Base):
 
         return self.request(url, request_type='GET', body=True)
 
+    def get_unread_for_team(self,
+                            user_id: str,
+                            team_id: str) -> dict:
+        """
+        Get the unread mention and message counts for a team for the specified user.
 
+        Must be the user or have edit_other_users permission and have view_team permission for the team.
 
+        :param user_id: User GUID.
+        :param team_id: Team GUID.
+        :return: Team unread count retrieval info.
+        """
+
+        url = f"{self.base_url}/users/{user_id}/teams/{team_id}/unread"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
