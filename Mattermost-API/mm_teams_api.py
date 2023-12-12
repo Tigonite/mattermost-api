@@ -687,3 +687,32 @@ class Teams(Base):
             self.add_to_json('scheme_user', scheme_user)
 
         return self.request(url, request_type='PUT', body=True)
+
+    def get_team_unread_for_user(self,
+                                 user_id:str,
+                                 exclude_team:str,
+                                 include_collapsed_threads:bool)->dict:
+        """
+        Get the count for unread messages and mentions in the teams the user is a member of.
+
+        Must be logged in.
+
+        :param user_id: User GUID.
+        :param exclude_team: Optional team id to be excluded from the results.
+        :param include_collapsed_threads: Default: false. Boolean to determine whether the collapsed
+        threads should be included or not.
+        :return: Team unreads retrieval info.
+        """
+
+        url = f"{self.base_url}/users/{user_id}/teams/unread"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('exclude_team', exclude_team)
+        if include_collapsed_threads is not None:
+            self.add_to_json('include_collapsed_threads', include_collapsed_threads)
+
+        return self.request(url, request_type='GET', body=True)
+
+
+
