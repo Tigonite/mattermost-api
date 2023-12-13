@@ -762,7 +762,7 @@ class Teams(Base):
                                        team_id: str,
                                        emails: list[str],
                                        channels: list[str],
-                                       message: str) -> dict:
+                                       message: str=None) -> dict:
         """
         Invite guests to existing team channels usign the user's email.
 
@@ -788,3 +788,19 @@ class Teams(Base):
             self.add_to_json('message', message)
 
         return self.request(url, request_type='POST', body=True)
+
+    def invalidate_active_email_invitations(self)->dict:
+        """
+        Invalidate active email invitations that have not been accepted by the user.
+
+        Must have sysconsole_write_authentication permission.
+
+        :return: Email invites info.
+        """
+
+        url = f"{self.api_url}/invites/email"
+
+        self.reset()
+        self.add_application_json_header()
+
+        return self.request(url, request_type='DEL')
