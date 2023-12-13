@@ -789,7 +789,7 @@ class Teams(Base):
 
         return self.request(url, request_type='POST', body=True)
 
-    def invalidate_active_email_invitations(self)->dict:
+    def invalidate_active_email_invitations(self) -> dict:
         """
         Invalidate active email invitations that have not been accepted by the user.
 
@@ -801,6 +801,33 @@ class Teams(Base):
         url = f"{self.api_url}/invites/email"
 
         self.reset()
-        self.add_application_json_header()
 
         return self.request(url, request_type='DEL')
+
+    def import_team_from_other_application(self,
+                                           team_id: str,
+                                           file: str,
+                                           filesize: int,
+                                           importFrom: str) -> dict:
+        """
+        Import a team into a existing team. Import users, channels, posts, hooks.
+
+        Must have permission_import_team permission.
+
+        :param team_id: Team GUID.
+        :param file: A file to be uploaded in zip format.
+        :param filesize: The size of the zip file to be imported.
+        :param importFrom: String that defines from which application the team
+        was exported to be imported into Mattermost.
+        :return: JSON object containing a base64 encoded text file info.
+        """
+
+        url = f"{self.api_url}/{team_id}/import"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('file', file)
+        self.add_to_json('filesize', filesize)
+        self.add_to_json('importFrom', importFrom)
+
+        return self.request(url, request_type='POST', body=True)
