@@ -749,11 +749,42 @@ class Teams(Base):
         :return: Users invite info.
         """
 
-        url = f"{self.api_url}/teams/{team_id}/invite/email"
+        url = f"{self.api_url}/{team_id}/invite/email"
 
         self.reset()
         self.add_application_json_header()
         if user_email is not None:
             self.add_to_json('user_email', user_email)
+
+        return self.request(url, request_type='POST', body=True)
+
+    def invite_guests_to_team_by_email(self,
+                                       team_id: str,
+                                       emails: list[str],
+                                       channels: list[str],
+                                       message: str) -> dict:
+        """
+        Invite guests to existing team channels usign the user's email.
+
+        The number of emails that can be sent is rate limited to 20 per hour with a burst of 20 emails.
+        If the rate limit exceeds, the error message contains details on when to retry and when the timer will be reset.
+
+        Minimum server version: 5.16
+
+        :param team_id: Team GUID.
+        :param emails: List of emails.
+        :param channels: List of channel ids.
+        :param message: Message to include in the invite.
+        :return: Guests invite info.
+        """
+
+        url = f"{self.api_url}/{team_id}/invite-guests/email"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('emails', emails)
+        self.add_to_json('channels', channels)
+        if message is not None:
+            self.add_to_json('message', message)
 
         return self.request(url, request_type='POST', body=True)
