@@ -831,3 +831,22 @@ class Teams(Base):
         self.add_to_json('importFrom', importFrom)
 
         return self.request(url, request_type='POST', body=True)
+
+    def get_invite_info_for_team(self,
+                                 invite_id: str) -> dict:
+        """
+        Get the name, display_name, description and id for a team from the invite id.
+
+        Minimum server version: 4.0
+
+        No authentication required.
+
+        :param invite_id: Invite id for a team.
+        :return: Team invite info
+        """
+
+        url = f"{self.api_url}/invite/{invite_id}"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
