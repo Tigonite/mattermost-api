@@ -262,7 +262,7 @@ class Teams(Base):
         """
         Search teams based on search term and options provided in the request body.
 
-        Logged in user only shows open teams Logged in user with "manage_system" permission shows all teams.
+        Logged-in user only shows open teams Logged-in user with "manage_system" permission shows all teams.
 
         :param term: The search term to match against the name or display name of teams
         :param page: The page number to return, if paginated. If this parameter is not present with the
@@ -357,7 +357,7 @@ class Teams(Base):
         if per_page is not None:
             self.add_to_json('per_page', per_page)
 
-        return self.request(url, request_type='GET')
+        return self.request(url, request_type='GET', body=True)
 
     def add_user_to_team(self,
                          team_id: str,
