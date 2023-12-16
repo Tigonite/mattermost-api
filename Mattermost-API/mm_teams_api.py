@@ -863,6 +863,7 @@ class Teams(Base):
         :param scheme_id: The ID of the scheme.
         :return: Team scheme update info.
         """
+
         url = f"{self.api_url}/{team_id}/scheme"
 
         self.reset()
@@ -870,3 +871,37 @@ class Teams(Base):
         self.add_to_json('scheme_id', scheme_id)
 
         return self.request(url, request_type='PUT', body=True)
+
+    def team_members_minus_group_members(self,
+                                         team_id: str,
+                                         group_ids: str,
+                                         page: int = None,
+                                         per_page: int = None) -> dict:
+        """
+        Get the set of users who are members of the team minus the set of users who are members of the given groups.
+        Each user object contains an array of group objects representing the group memberships for that user.
+        Each user object contains the boolean fields scheme_guest, scheme_user, and scheme_admin
+        representing the roles that user has for the given team.
+
+        Must have manage_system permission.
+
+        Minimum server version: 5.14
+
+        :param team_id: Team GUID
+        :param group_ids: Default: "". A comma-separated list of group ids.
+        :param page: Default: 0. The page to select.
+        :param per_page: Default: 0. The number of users per page.
+        :return: Users specified by the pagination info.
+        """
+
+        url = f"{self.api_url}/{team_id}/members_minus_group_members"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('group_ids', group_ids)
+        if page is not None:
+            self.add_to_json('page', page)
+        if per_page is not None:
+            self.add_to_json('per_page', per_page)
+
+        return self.request(url, request_type='GET', body=True)
