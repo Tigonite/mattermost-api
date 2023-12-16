@@ -383,7 +383,7 @@ class Teams(Base):
         if user_id is not None:
             self.add_to_json('user_id', user_id)
 
-        return self.request(url, request_type='GET', body=True)
+        return self.request(url, request_type='POST', body=True)
 
     def add_user_to_team_from_invite(self, token: str) -> dict:
         """
