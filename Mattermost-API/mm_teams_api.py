@@ -173,7 +173,7 @@ class Teams(Base):
         :param company_name: Team company_name that is to be updated.
         :param invite_id: Team invite ID that is to be updated.
         :param allow_open_invite: Team allow open invite that is to be updated.
-        :return: Team deletion info.
+        :return: Team patch info.
         """
 
         url = f"{self.api_url}/{team_id}/patch"
@@ -184,11 +184,11 @@ class Teams(Base):
             self.add_to_json('display_name', display_name)
         if description is not None:
             self.add_to_json('description', description)
-        if display_name is not None:
+        if company_name is not None:
             self.add_to_json('company_name', company_name)
-        if display_name is not None:
+        if invite_id is not None:
             self.add_to_json('invite_id', invite_id)
-        if display_name is not None:
+        if allow_open_invite is not None:
             self.add_to_json('allow_open_invite', allow_open_invite)
 
         return self.request(url, request_type='PUT', body=True)
@@ -921,7 +921,7 @@ class Teams(Base):
         Must be authenticated and have the view_team permission.
 
         :param team_id: Team GUID
-        :param terms: The search terms as inputed by the user. To search for files from a user include from:someusername, using a user's username. To search in a specific channel include in:somechannel, using the channel name (not the display name). To search for specific extensions included ext:extension.
+        :param terms: The search terms as input by the user. To search for files from a user include from:someusername, using a user's username. To search in a specific channel include in:somechannel, using the channel name (not the display name). To search for specific extensions included ext:extension.
         :param is_or_search: Set to true if an Or search should be performed vs an And search.
         :param time_zone_offset: Default: 0. Offset from UTC of user timezone for date searches.
         :param include_deleted_channels: Set to true if deleted channels should be included in the search. (archived channels)
