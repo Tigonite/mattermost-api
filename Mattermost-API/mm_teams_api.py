@@ -850,3 +850,23 @@ class Teams(Base):
         self.reset()
 
         return self.request(url, request_type='GET')
+
+    def set_team_scheme(self, team_id: str, scheme_id: str) -> dict:
+        """
+        Set a team's scheme, more specifically sets the scheme_id value of a team record.
+
+        Must have manage_system permission.
+
+        Minimum server version: 5.0
+
+        :param team_id: Team GUID
+        :param scheme_id: The ID of the scheme.
+        :return: Team scheme update info.
+        """
+        url = f"{self.api_url}/{team_id}/scheme"
+
+        self.reset()
+        self.add_application_json_header()
+        self.add_to_json('scheme_id', scheme_id)
+
+        return self.request(url, request_type='PUT', body=True)
