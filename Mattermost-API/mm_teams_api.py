@@ -106,7 +106,7 @@ class Teams(Base):
         :param company_name: Team company name to update.
         :param allowed_domains: Team allowed domains to update.
         :param invite_id: Team invite ID to update.
-        :param allow_open_invite: Team allow_open invite to update.
+        :param allow_open_invite: Team allow open invite to update.
         :return: Team update info.
         """
 
@@ -114,7 +114,6 @@ class Teams(Base):
 
         self.reset()
         self.add_application_json_header()
-        self.add_to_json('team_id', team_id)
         self.add_to_json('id', id)
         self.add_to_json('display_name', display_name)
         self.add_to_json('description', description)
