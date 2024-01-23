@@ -155,11 +155,11 @@ class Teams(Base):
 
     def patch_team(self,
                    team_id: str,
-                   display_name: str,
-                   description: str,
-                   company_name: str,
-                   invite_id: str,
-                   allow_open_invite: bool) -> dict:
+                   display_name: str = None,
+                   description: str = None,
+                   company_name: str = None,
+                   invite_id: str = None,
+                   allow_open_invite: bool = None) -> dict:
         """
         Partially update a team by providing only the fields you want to update. Omitted fields will not be updated.
         The fields that can be updated are defined in the request body, all other provided fields will be ignored.
