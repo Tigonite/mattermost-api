@@ -246,7 +246,6 @@ class Teams(Base):
         url = f"{self.api_url}/name/{name}"
 
         self.reset()
-        self.add_application_json_header()
 
         return self.request(url, request_type='GET')
 
