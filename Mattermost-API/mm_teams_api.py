@@ -230,7 +230,6 @@ class Teams(Base):
         url = f"{self.api_url}/{team_id}/restore"
 
         self.reset()
-        self.add_application_json_header()
 
         return self.request(url, request_type='POST')
 
