@@ -398,7 +398,7 @@ class Teams(Base):
         self.add_application_json_header()
         self.add_to_json('token', token)
 
-        return self.request(url, request_type='GET', body=True)
+        return self.request(url, request_type='POST', body=True)
 
     def add_multiple_users_to_team(self,
                                    team_id: str,
