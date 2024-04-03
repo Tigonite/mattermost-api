@@ -1693,9 +1693,9 @@ class Users(Base):
             self.add_to_json('nickname', nickname)
         if locale is not None:
             self.add_to_json('locale', locale)
-        if nickname is not None:
+        if position is not None:
             self.add_to_json('position', position)
-        if nickname is not None:
+        if props is not None:
             self.add_to_json('props', props)
         if notify_props is not None:
             self.add_to_json('notify_props', notify_props)
