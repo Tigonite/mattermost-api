@@ -1781,12 +1781,12 @@ class Users(Base):
         return self.request(url, request_type='GET', body=True)
 
     def gets_full_count_of_users_that_match_filter(self,
-                                                   role_filter:str=None,
-                                                   team_filter:str=None,
-                                                   has_no_team:bool=None,
-                                                   hide_active:bool=None,
-                                                   hide_inactive:bool=None,
-                                                   search_term:str=None)->dict:
+                                                   role_filter: str = None,
+                                                   team_filter: str = None,
+                                                   has_no_team: bool = None,
+                                                   hide_active: bool = None,
+                                                   hide_inactive: bool = None,
+                                                   search_term: str = None) -> dict:
         """
         Get the full count of users admin reporting purposes, based on provided parameters.
 
