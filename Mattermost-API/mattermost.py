@@ -10,6 +10,9 @@ from mm_permissions_api import Permissions
 from mm_terms_of_service_api import TermsOfService
 from mm_usage_api import Usage
 from mm_shared_channels_api import SharedChannels
+from mm_threads_api import Threads
+from mm_posts_api import Posts
+from mm_bots_api import Bots
 
 
 class MattermostAPI:
@@ -65,6 +68,15 @@ class MattermostAPI:
     def shared_channels(self):
         return SharedChannels(token=self.token, server_url=self.server_url)
 
+    @property
+    def threads(self):
+        return Threads(token=self.token, server_url=self.server_url)
 
+    @property
+    def posts(self):
+        return Posts(token=self.token, server_url=self.server_url)
 
+    @property
+    def bots(self):
+        return Bots(token=self.token, server_url=self.server_url)
 

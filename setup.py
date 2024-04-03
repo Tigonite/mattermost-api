@@ -10,11 +10,11 @@ with open('HISTORY.md') as history_file:
 
 setup_args = dict(
     name='Mattermost-API',
-    version='0.18',
-    description='Simple Mattermost API library',
+    version='0.20',
+    description='Simple wrapper for Mattermost API',
     long_description_content_type="text/markdown",
     long_description=README + '\n\n' + HISTORY,
-    license='MIT',
+    license='MIT License',
     packages=find_packages(),
     author='Aleksandr Kuznetsov, Aleksandr Zarin',
     author_email='izhatomic@yandex.ru, vector-777@yandex.ru',
@@ -24,6 +24,7 @@ setup_args = dict(
 )
 
 install_requires = [
+    "setuptools~=67.8.0",
     'requests'
 ]
 

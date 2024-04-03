@@ -11,6 +11,10 @@ from . import mm_opengraph_api
 from . import mm_permissions_api
 from . import mm_terms_of_service_api
 from . import mm_usage_api
+from . import mm_threads_api
+from . import mm_posts_api
+from . import mm_bots_api
+from . import mm_shared_channels_api
 
 
 __all__ = (
@@ -27,4 +31,8 @@ __all__ = (
     'mm_permissions_api',
     'mm_terms_of_service_api',
     'mm_usage_api',
+    'mm_threads_api',
+    'mm_posts_api',
+    'mm_bots_api',
+    'mm_shared_channels_api'
 )
