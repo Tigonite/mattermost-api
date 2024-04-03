@@ -371,7 +371,7 @@ class Users(Base):
         :param without_team: Set this to true if you would like to search for users that are not on a team.
         This option takes precendence over team_id, in_channel_id, and not_in_channel_id.
         :param limit: Default: 100. The maximum number of users to return in the results
-        :return: User page retrieval info.
+        :return: User list retrieval info.
         """
 
         url = f"{self.api_url}/search"
@@ -416,6 +416,7 @@ class Users(Base):
         :param team_id: Team ID
         :param channel_id: Channel ID
         :param limit: Default: 100. The maximum number of users to return in each subresult
+        Available as of server version 5.6. Defaults to 100 if not provided or on an earlier server version.
         :return: User autocomplete info.
         """
 
