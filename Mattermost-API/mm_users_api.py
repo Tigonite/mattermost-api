@@ -625,7 +625,7 @@ class Users(Base):
                    nickname: str = None,
                    locale: str = None,
                    position: str = None,
-                   props: str = None,
+                   props: dict = None,
                    notify_props: dict = None) -> dict:
         """
         Partially update a user by providing only the fields you want to update. Omitted fields will not be updated.
@@ -752,7 +752,7 @@ class Users(Base):
 
         :param user_id: User GUID
         :param image: The image to be uploaded
-        :return: Profile image
+        :return: Profile image setting info
         """
 
         url = f"{self.api_url}/{user_id}/image"
