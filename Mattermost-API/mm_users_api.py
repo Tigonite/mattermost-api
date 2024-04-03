@@ -1702,4 +1702,80 @@ class Users(Base):
 
         return self.request(url, request_type='POST', body=True)
 
-    def
+    def get_list_of_paged_sorted_users_for_admin_reporting_purposes(self,
+                                                                    sort_column: str = None,
+                                                                    direction: str = None,
+                                                                    sort_direction: str = None,
+                                                                    page_size: int = None,
+                                                                    from_column_value: str = None,
+                                                                    from_id: str = None,
+                                                                    date_range: str = None,
+                                                                    role_filter: str = None,
+                                                                    team_filter: str = None,
+                                                                    has_no_team: bool = None,
+                                                                    hide_active: bool = None,
+                                                                    hide_inactive: bool = None,
+                                                                    search_term: str = None) -> dict:
+        """
+        Get a list of paged users for admin reporting purposes, based on provided parameters.
+        Must be a system admin to invoke this API.
+
+        Requires sysconsole_read_user_management_users.
+
+        :param sort_column: Default: "Username". The column to sort the users by. Must be one of ("CreateAt",
+        "Username", "FirstName", "LastName", "Nickname", "Email") or the API will return an error.
+        :param direction: Default: "down". The direction in which to accept paging values from. Will return values ahead of the cursor if "up",
+        and below the cursor if "down". Default is "down".
+        :param sort_direction: Default: "asc". The sorting direction. Must be one of ("asc", "desc").
+        Will default to 'asc' if not specified or the input is invalid.
+        :param page_size: Default: 50. The maximum number of users to return.
+        :param from_column_value: The value of the sorted column corresponding to the cursor to read from.
+        Should be blank for the first page asked for.
+        :param from_id: The value of the user id corresponding to the cursor to read from.
+        Should be blank for the first page asked for.
+        :param date_range: Default: "alltime". The date range of the post statistics to display. Must be one of
+        ("last30days", "previousmonth","last6months", "alltime"). Will default to 'alltime' if the input is not valid.
+        :param role_filter: Filter users by their role.
+        :param team_filter: Filter users by a specified team ID.
+        :param has_no_team: If true, show only users that have no team. Will ignore provided "team_filter" if true.
+        :param hide_active: If true, show only users that are inactive.
+        Cannot be used at the same time as "hide_inactive"
+        :param hide_inactive: If true, show only users that are active.
+        Cannot be used at the same time as "hide_active"
+        :param search_term: A filtering search term that allows filtering by Username, FirstName,
+        LastName, Nickname or Email
+        :return: User page retrieval info.
+        """
+
+        url = f"{self.base_url}/reports/users"
+
+        self.reset()
+        self.add_application_json_header()
+        if sort_column is not None:
+            self.add_to_json('sort_column', sort_column)
+        if direction is not None:
+            self.add_to_json('direction', direction)
+        if sort_direction is not None:
+            self.add_to_json('sort_direction', sort_direction)
+        if page_size is not None:
+            self.add_to_json('page_size', page_size)
+        if from_column_value is not None:
+            self.add_to_json('from_column_value', from_column_value)
+        if from_id is not None:
+            self.add_to_json('from_id', from_id)
+        if date_range is not None:
+            self.add_to_json('date_range', date_range)
+        if role_filter is not None:
+            self.add_to_json('role_filter', role_filter)
+        if team_filter is not None:
+            self.add_to_json('team_filter', team_filter)
+        if has_no_team is not None:
+            self.add_to_json('has_no_team', has_no_team)
+        if hide_active is not None:
+            self.add_to_json('hide_active', hide_active)
+        if hide_inactive is not None:
+            self.add_to_json('hide_inactive', hide_inactive)
+        if search_term is not None:
+            self.add_to_json('search_term', search_term)
+
+        return self.request(url, request_type='GET', body=True)
