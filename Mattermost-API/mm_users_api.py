@@ -1779,3 +1779,46 @@ class Users(Base):
             self.add_to_json('search_term', search_term)
 
         return self.request(url, request_type='GET', body=True)
+
+    def gets_full_count_of_users_that_match_filter(self,
+                                                   role_filter:str=None,
+                                                   team_filter:str=None,
+                                                   has_no_team:bool=None,
+                                                   hide_active:bool=None,
+                                                   hide_inactive:bool=None,
+                                                   search_term:str=None)->dict:
+        """
+        Get the full count of users admin reporting purposes, based on provided parameters.
+
+        Must be a system admin to invoke this API.
+
+        :param role_filter: Filter users by their role.
+        :param team_filter: Filter users by a specified team ID.
+        :param has_no_team: If true, show only users that have no team. Will ignore provided "team_filter" if true.
+        :param hide_active: If true, show only users that are inactive.
+        Cannot be used at the same time as "hide_inactive"
+        :param hide_inactive: If true, show only users that are active.
+        Cannot be used at the same time as "hide_active"
+        :param search_term: A filtering search term that allows filtering by Username,
+        FirstName, LastName, Nickname or Email
+        :return: User count retrieval info.
+        """
+
+        url = f"{self.base_url}/reports/users/count"
+
+        self.reset()
+        self.add_application_json_header()
+        if role_filter is not None:
+            self.add_to_json('role_filter', role_filter)
+        if team_filter is not None:
+            self.add_to_json('team_filter', team_filter)
+        if has_no_team is not None:
+            self.add_to_json('has_no_team', has_no_team)
+        if hide_active is not None:
+            self.add_to_json('hide_active', hide_active)
+        if hide_inactive is not None:
+            self.add_to_json('hide_inactive', hide_inactive)
+        if search_term is not None:
+            self.add_to_json('search_term', search_term)
+
+        return self.request(url, request_type='GET', body=True)
