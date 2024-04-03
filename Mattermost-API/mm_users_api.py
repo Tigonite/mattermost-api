@@ -1562,7 +1562,8 @@ class Users(Base):
                                                           match_field: str,
                                                           force: bool) -> dict:
         """
-        Migrates accounts from one authentication provider to another. For example, you can upgrade your authentication provider from email to LDAP.
+        Migrates accounts from one authentication provider to another.
+        For example, you can upgrade your authentication provider from email to LDAP.
 
         Minimum server version: 5.28
 
