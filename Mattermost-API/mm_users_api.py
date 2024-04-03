@@ -1822,3 +1822,18 @@ class Users(Base):
             self.add_to_json('search_term', search_term)
 
         return self.request(url, request_type='GET', body=True)
+
+    def gets_user_limits_for_server(self) -> dict:
+        """
+        Gets the user limits for the server
+
+        Requires sysconsole_read_user_management_users.
+
+        :return: User limits info
+        """
+
+        url = f"{self.base_url}/limits/users"
+
+        self.reset()
+
+        return self.request(url, request_type='GET')
