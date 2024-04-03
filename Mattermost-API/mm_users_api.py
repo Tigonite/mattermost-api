@@ -1342,7 +1342,7 @@ class Users(Base):
         For non-self requests, must also have the edit_other_users permission.
 
         :param token_id: User access token GUID.
-        :return: User access token disable info.
+        :return: Personal access token disabling info.
         """
 
         url = f"{self.api_url}/tokens/disable"
