@@ -964,7 +964,7 @@ class Users(Base):
         Update a user's password. New password must meet password policy set by server configuration.
         Current password is required if you're updating your own password.
 
-        Must be logged in as the user the password is being changed for or have
+        Must be logged in as the user the password is being changed for or have manage_system permission.
 
         :param user_id: User GUID
         :param new_password: The new password for the user.
@@ -1124,7 +1124,7 @@ class Users(Base):
 
         self.reset()
 
-        return self.request(url, request_type='GET')
+        return self.request(url, request_type='POST')
 
     def verify_user_email(self, token: str) -> dict:
         """
