@@ -1673,7 +1673,7 @@ class Users(Base):
         :return: Bot conversion info.
         """
 
-        url = f"{self.api_url}/{bot_user_id}/convert_to_user"
+        url = f"{self.base_url}/bots/{bot_user_id}/convert_to_user"
 
         self.reset()
         self.add_application_json_header()
@@ -1701,3 +1701,5 @@ class Users(Base):
             self.add_to_json('notify_props', notify_props)
 
         return self.request(url, request_type='POST', body=True)
+
+    def
