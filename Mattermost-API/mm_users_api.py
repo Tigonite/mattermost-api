@@ -1532,7 +1532,7 @@ class Users(Base):
     def get_all_channel_members_from_all_teams_for_user(self,
                                                         user_id: str,
                                                         page: int = None,
-                                                        per_page: int = None) -> dict:
+                                                        pageSize: int = None) -> dict:
         """
         Get all channel members from all teams for a user.
 
@@ -1542,7 +1542,7 @@ class Users(Base):
 
         :param user_id: The ID of the user. This can also be "me" which will point to the current user.
         :param page: Page specifies which part of the results to return, by PageSize.
-        :param per_page: PageSize specifies the size of the returned chunk of results.
+        :param pageSize: PageSize specifies the size of the returned chunk of results.
         :return: User upload retrieval info.
         """
 
@@ -1552,8 +1552,8 @@ class Users(Base):
         self.add_application_json_header()
         if page is not None:
             self.add_to_json('page', page)
-        if per_page is not None:
-            self.add_to_json('per_page', per_page)
+        if pageSize is not None:
+            self.add_to_json('pageSize', pageSize)
 
         return self.request(url, request_type='GET', body=True)
 
