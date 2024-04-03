@@ -1132,11 +1132,11 @@ class Users(Base):
 
         No permissions required.
 
-        :param  token: The token given to validate the email.
+        :param token: The token given to validate the email.
         :return: User email verification info.
         """
 
-        url = f"{self.api_url}/email/verify/"
+        url = f"{self.api_url}/email/verify"
 
         self.reset()
         self.add_application_json_header()
