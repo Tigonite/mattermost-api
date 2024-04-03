@@ -154,3 +154,31 @@ class Bookmarks(Base):
         self.reset()
 
         return self.request(url, request_type='DEL')
+
+    def upd_chnl_bkmrk_order(self,
+                             channel_id: str,
+                             bookmark_id: str,
+                             number: int = None) -> dict:
+        """
+        Updates the order of a channel bookmark, setting its new order from
+        the parameters and updating the rest of the bookmarks of the channel to accomodate for this change.
+
+        Minimum server version: 9.5
+
+        Must have the order_bookmark_public_channel or order_bookmark_private_channel depending on the channel type.
+        If the channel is a DM or GM, must be a non-guest member.
+
+        :param channel_id: Channel GUID.
+        :param bookmark_id: Bookmark GUID.
+        :param number: The new sort order for the Channel Bookmark.
+
+        :return: Channel Bookmarks sort order update info.
+        """
+
+        url = f"{self.api_url}/{channel_id}/bookmarks/{bookmark_id}/sort_order"
+        self.reset()
+        self.add_application_json_header()
+        if number is not None:
+            self.add_to_json('number', number)
+
+        return self.request(url, request_type='POST', body=True)
