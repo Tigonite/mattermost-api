@@ -1519,7 +1519,7 @@ class Users(Base):
 
         Must be logged in as the user who created the upload sessions.
 
-        :param user_id: User GUID
+        :param user_id: The ID of the user. This can also be "me" which will point to the current user.
         :return: User upload retrieval info.
         """
 
