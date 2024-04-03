@@ -131,3 +131,26 @@ class Bookmarks(Base):
             self.add_to_json('type', tp)
 
         return self.request(url, request_type='PATCH', body=True)
+
+    def del_chnl_bkmrk(self,
+                       channel_id: str,
+                       bookmark_id: str) -> dict:
+        """
+        Archives a channel bookmark.
+        This will set the deleteAt to the current timestamp in the database.
+
+        Minimum server version: 9.5
+
+        Must have the delete_bookmark_public_channel or delete_bookmark_private_channel depending on the channel type.
+        If the channel is a DM or GM, must be a non-guest member.
+
+        :param channel_id: Channel GUID.
+        :param bookmark_id: Bookmark GUID.
+
+        :return: Channel Bookmarks deletion info.
+        """
+
+        url = f"{self.api_url}/{channel_id}/bookmarks/{bookmark_id}"
+        self.reset()
+
+        return self.request(url, request_type='DEL')
