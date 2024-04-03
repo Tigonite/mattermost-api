@@ -1587,10 +1587,11 @@ class Users(Base):
 
     def migrate_user_accounts_authentication_type_to_saml(self,
                                                           t_from: str,
-                                                          matches: str,
+                                                          matches: dict,
                                                           auto: bool) -> dict:
         """
-        Migrates accounts from one authentication provider to another. For example, you can upgrade your authentication provider from email to SAML.
+        Migrates accounts from one authentication provider to another.
+        For example, you can upgrade your authentication provider from email to SAML.
 
         Minimum server version: 5.28
 
