@@ -300,11 +300,14 @@ class Users(Base):
 
     def get_users_by_group_channels_ids(self, channel_ids: list[str] = None) -> dict:
         """
-        Get a list of users based on a provided list of user ids.
+        Get an object containing a key per group channel id in the query and
+        its value as a list of users members of that group channel.
+
+        The user must be a member of the group ids in the query, or they will be omitted from the response.
 
         Requires an active session but no other permissions.
 
-        :param channel_ids: Only return users that have been modified since the given Unix timestamp (in milliseconds).
+        :param channel_ids: List of group channel ids
         :return: User list retrieval info.
         """
 
