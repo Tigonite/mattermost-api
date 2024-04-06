@@ -431,7 +431,8 @@ class Teams(Base):
         :param scheme_admin: Whether this team member holds the default admin
         role defined by the team's permissions scheme.
         :param explicit_roles: The list of roles explicitly assigned to this team member,
-        as a space separated list of role names. This list does not include any roles granted implicitly through permissions schemes.
+        as a space separated list of role names.
+        This list does not include any roles granted implicitly through permissions schemes.
         :return: Team members creation info
         """
 
