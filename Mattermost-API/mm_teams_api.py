@@ -678,10 +678,8 @@ class Teams(Base):
         self.reset()
         self.add_application_json_header()
 
-        if scheme_admin is not None:
-            self.add_to_json('scheme_admin', scheme_admin)
-        if scheme_user is not None:
-            self.add_to_json('scheme_user', scheme_user)
+        self.add_to_json('scheme_admin', scheme_admin)
+        self.add_to_json('scheme_user', scheme_user)
 
         return self.request(url, request_type='PUT', body=True)
 
