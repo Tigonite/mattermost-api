@@ -588,7 +588,7 @@ class Teams(Base):
 
     def sets_team_icon(self,
                        team_id: str,
-                       image: str = None) -> dict:
+                       image: str) -> dict:
         """
         Sets the team icon for the team.
 
@@ -606,8 +606,7 @@ class Teams(Base):
         self.reset()
         self.add_multipart_form_data()
 
-        if image is not None:
-            self.add_file(file_path=image)
+        self.add_file(file_path=image)
 
         return self.request(url, request_type='POST', files=True)
 
