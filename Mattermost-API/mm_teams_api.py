@@ -648,8 +648,7 @@ class Teams(Base):
 
         self.reset()
         self.add_application_json_header()
-        if roles is not None:
-            self.add_to_json('roles', roles)
+        self.add_to_json('roles', roles)
 
         return self.request(url, request_type='PUT', body=True)
 
