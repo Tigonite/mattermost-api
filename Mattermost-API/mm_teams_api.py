@@ -846,7 +846,9 @@ class Teams(Base):
 
         return self.request(url, request_type='GET')
 
-    def set_team_scheme(self, team_id: str, scheme_id: str) -> dict:
+    def set_team_scheme(self,
+                        team_id: str,
+                        scheme_id: str) -> dict:
         """
         Set a team's scheme, more specifically sets the scheme_id value of a team record.
 
@@ -910,16 +912,21 @@ class Teams(Base):
                              page: int = None,
                              per_page: int = None) -> dict:
         """
-        Search for files in a team based on file name, extention and file content (if file content extraction is enabled and supported for the files).
+        Search for files in a team based on file name, extention and file content
+        (if file content extraction is enabled and supported for the files).
+
         Minimum server version: 5.34
 
         Must be authenticated and have the view_team permission.
 
         :param team_id: Team GUID
-        :param terms: The search terms as input by the user. To search for files from a user include from:someusername, using a user's username. To search in a specific channel include in:somechannel, using the channel name (not the display name). To search for specific extensions included ext:extension.
+        :param terms: The search terms as input by the user. To search for files from a user include from:someusername,
+        using a user's username. To search in a specific channel include in:somechannel, using the channel name
+        (not the display name). To search for specific extensions included ext:extension.
         :param is_or_search: Set to true if an Or search should be performed vs an And search.
         :param time_zone_offset: Default: 0. Offset from UTC of user timezone for date searches.
-        :param include_deleted_channels: Set to true if deleted channels should be included in the search. (archived channels)
+        :param include_deleted_channels: Set to true if deleted channels should be included in the search.
+        (archived channels)
         :param page: Default: 0. The page to select. (Only works with Elasticsearch)
         :param per_page: Default: 60. The number of posts per page. (Only works with Elasticsearch)
         :return: File list retrieval info.
