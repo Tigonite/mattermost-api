@@ -757,7 +757,7 @@ class Teams(Base):
                                        team_id: str,
                                        emails: list[str],
                                        channels: list[str],
-                                       message: str=None) -> dict:
+                                       message: str = None) -> dict:
         """
         Invite guests to existing team channels usign the user's email.
 
