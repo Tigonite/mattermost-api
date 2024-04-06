@@ -363,7 +363,8 @@ class Teams(Base):
         """
         Add user to the team by user_id.
 
-        Must be authenticated and team be open to add self. For adding another user, authenticated user must have the add_user_to_team permission.
+        Must be authenticated and team be open to add self. For adding another user,
+        authenticated user must have the add_user_to_team permission.
 
         :param team_id: Team GUID
         :param t_id: Team ID
